@@ -104,17 +104,10 @@ void printBoard(enum Player board[3][3])
     {
         for (int j = 0; j < 3; j++)
         {
-            if (board[i][j] == X) {
-                printf("  X  |");
-            }
-            else if (board[i][j] == O)
-            {
-                printf("  O  |");
-            }
-            else
-            {
-                printf("     |");
-            }
+            char p = (board[i][j] == X) ? 'X' : (board[i][j] == O) ? 'O' : ' ';
+            
+            printf("  %c  |", p);
+
             if (i <2 && j == 2)
             {
                 printf("\n   |-----|-----|-----|\n%i  |", (i+2));
@@ -170,7 +163,7 @@ char isGameOver(enum Player board[3][3], enum Player active)
     series = 0;
     for (int i = 2; i >= 0; i--)
     {
-        if (board[i][i] == active) series++;
+        if (board[i][2-i] == active) series++;
         if (series == 3) return 'y';
     }
 
