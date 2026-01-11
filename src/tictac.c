@@ -6,11 +6,11 @@ enum Player { none, X, O };
 
 void printBoard(enum Player board[3][3]);
 void clear_screen();
+int isGameOver(enum Player board[3][3]);
 
 int main()
 {
-    int game = 1;
-    
+    clear_screen();
     enum Player activePlayer = X;
     enum Player board[3][3] = {
         {none, none, none},
@@ -18,21 +18,21 @@ int main()
         {none, none, none}
     };
 
-    while(game)
+    while(1)
     {
         int rInput;
-        char p;
+        char p = (activePlayer == X) ? 'X' : 'O';
 
-        p = (activePlayer == X) ? 'X' : 'O';
-        
+        printf("\n  Player %c's turn\n\n", p);
         printBoard(board);
-        printf("Player %c input ##: \n", p);
+
+        printf("\n\nPlayer input ##: \n");
         scanf("%i", &rInput);
 
-        int x = (rInput / 10);
-        int y = (rInput - 10*x);
+        int x = (rInput / 10) - 1;
+        int y = (rInput - 10*(x+1)) - 1;
 
-        if (board[y][x] == none)
+        if (((x < 3 && x >= 0) && (y < 3 && y >= 0)) && board[y][x] == none)
         {
             if (activePlayer == X) 
             {
@@ -48,13 +48,16 @@ int main()
         else
         {
             clear_screen();
-            printf("\nInvalid Move!\n");
+            printf("\n !! Invalid Move !!\n");
             continue;
         }
 
         clear_screen();
-        printf("\n");
-    }
+        if (isGameOver(board)) break;
+    } 
+
+
+
     return 0;
 }
 
@@ -101,4 +104,9 @@ void clear_screen() {
     #else
         system("clear");
     #endif
+}
+
+int isGameOver(enum Player board[3][3])
+{
+    return 0;
 }
